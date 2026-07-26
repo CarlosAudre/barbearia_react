@@ -1,4 +1,3 @@
-import { SubmitButton } from "../components/SubmitButton";
 import { TextField } from "../components/TextField";
 import LoginImg from "../assets/img/login_img.png";
 import LoginImgMobile from "../assets/img/login_img_mobile.png";
