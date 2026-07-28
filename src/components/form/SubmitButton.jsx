@@ -5,6 +5,7 @@ export function SubmitButton({
   textColor,
   hoverBgColor,
   borderColor,
+  hoverText,
   onClick,
   type = "submit",
 }) {
@@ -13,10 +14,10 @@ export function SubmitButton({
       type={type}
       onClick={onClick}
       className={`flex justify-center items-center ${bg ? bg : "bg-[#D4AF37]"} border ${borderColor ? borderColor : ""} rounded-md w-full gap-2 p-2 cursor-pointer
-       ${hoverBgColor ? hoverBgColor : "hover:bg-amber-300"} text-black`}
+       ${hoverBgColor ? hoverBgColor : "hover:bg-amber-300"}  ${textColor ? textColor : "text-black"} ${hoverText ? hoverText : ""}`}
     >
       <span
-        className={`text-black font-semibold text-lg ${textColor ? textColor : "text-black"}`}
+        className={`font-semibold text-lg `}
       >
         {title}
       </span>
