@@ -1,6 +1,12 @@
 import { Clock, Trash } from "lucide-react";
+import { formatTime } from "../utils/formatTime";
 
-export function WorkSchedulePeriodCard({ startTime, endTime }) {
+export function WorkSchedulePeriodCard({
+  startTime,
+  endTime,
+  onTrashClick,
+  weekDay,
+}) {
   return (
     <div
       className="
@@ -18,14 +24,20 @@ export function WorkSchedulePeriodCard({ startTime, endTime }) {
       <Clock className="text-amber-300 shrink-0" />
 
       <div className="flex items-center justify-center gap-3 flex-1">
-        <p>{startTime}</p>
+        <p>{formatTime(startTime)}</p>
 
         <div className="w-1 h-1 rounded-full bg-white" />
 
-        <p>{endTime}</p>
+        <p>{formatTime(endTime)}</p>
       </div>
 
-      <Trash className="w-5 h-5 shrink-0 cursor-pointer hover:text-white transition-colors" />
+      <Trash
+        onClick={() => {
+          console.log("cliquei?")
+          onTrashClick(weekDay, startTime, endTime);
+        }}
+        className="w-5 h-5 shrink-0 cursor-pointer hover:text-amber-300 transition-colors"
+      />
     </div>
   );
 }

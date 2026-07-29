@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomSwitch from "./CustomSwitch";
 import { WorkSchedulePeriodCard } from "./WorkSchedulePeriodCard";
 import { SubmitButton } from "./form/SubmitButton";
 import { Plus } from "lucide-react";
+import { Button } from "./Button";
+import { days } from "../constants/days";
+import { NewPeriodTimeForm } from "./form/NewPeriodTimeForm";
 
-export function WorkScheduleCard({ WeekDay }) {
-  const [active, setActive] = useState(true);
+export function WorkScheduleCard({
+  day,
+  onToggle,
+  onCreatePeriodTime,
+  onDeletePeriodTime,
+}) {
+  const [weekDay, setWeekDay] = useState();
+  const [newPeriodTimeFormVisibility, setNewPeriodTimeFormVisibility] =
+    useState(false);
+
+  const dayInfo = days.find((d) => d.enum === day.weekDay);
 
   return (
-    <div className="flex flex-col xl:flex-row gap-4 bg-[#171717] rounded-xl p-5">
+    <div className="flex flex-col xl:flex-row gap-4 bg-[#1f1d1d] rounded-xl p-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 xl:w-72 ">
-        <p className="text-lg font-semibold">{WeekDay}</p>
+        <p className="text-lg font-semibold">{dayInfo.name}</p>
 
         <div className="flex items-center gap-3">
-          <CustomSwitch checked={active} onChange={setActive} />
+          <CustomSwitch checked={day.active} onChange={onToggle} />
           <p>Ativo</p>
         </div>
       </div>
@@ -27,13 +39,34 @@ export function WorkScheduleCard({ WeekDay }) {
       gap-3
     "
         >
-          <WorkSchedulePeriodCard startTime="08:00" endTime="12:00" />
-
-          <WorkSchedulePeriodCard startTime="14:00" endTime="18:00" />
+          {day.workTimes.length > 0 &&
+            day.workTimes.map((period, index) => (
+              <WorkSchedulePeriodCard
+                weekDay={day.weekDay}
+                key={`${period.startTime}-${period.endTime}`}
+                startTime={period.startTime}
+                endTime={period.endTime}
+                onTrashClick={onDeletePeriodTime}
+              />
+            ))}
         </div>
 
+        {newPeriodTimeFormVisibility && (
+          <NewPeriodTimeForm
+            weekDay={day.weekDay}
+            onCancel={() => setNewPeriodTimeFormVisibility((prev) => !prev)}
+            onConfirm={(startTime, endTime) =>
+              onCreatePeriodTime(day.weekDay, startTime, endTime)
+            }
+          />
+        )}
+
         <div className="flex justify-center lg:justify-end">
-          <SubmitButton
+          <Button
+            handleOnClick={() =>
+              setNewPeriodTimeFormVisibility((prev) => !prev)
+            }
+            type="button"
             title="Adicionar período"
             icon={Plus}
             hoverText="hover:text-black"

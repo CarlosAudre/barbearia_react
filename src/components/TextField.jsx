@@ -12,7 +12,7 @@ export function TextField({
   type,
   value,
   onChange,
-  required
+  required = true
 }) {
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -48,7 +48,7 @@ export function TextField({
         )}
         <input
           value={value}
-          required
+          required={required}
           type={inputType}
           onChange={onChange}
           placeholder={placeholder}

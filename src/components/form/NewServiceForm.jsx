@@ -19,7 +19,7 @@ export function NewServiceForm({
   return (
     <form
       onSubmit={handleOnSubmit}
-      className="flex flex-col bg-[#111111] p-10 rounded-2xl w-sm md:w-lg gap-5 font-playfair "
+      className="flex flex-col bg-[#111111] p-10 rounded-2xl w-sm md:w-lg gap-5 font-playfair"
     >
       <h1 className="text-2xl">{title}</h1>
       <TextField

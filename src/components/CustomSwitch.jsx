@@ -7,6 +7,7 @@ export default function CustomSwitch({
 }) {
   return (
     <button
+      type="button"
       onClick={() => onChange?.(!checked)}
       className={`
         relative w-13 h-6.5 rounded-full
