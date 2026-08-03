@@ -8,6 +8,7 @@ import { Availability } from "./pages/adm/Availability";
 import { Settings } from "./pages/adm/Settings"
 import { Dashboard } from "./pages/adm/Dashboard";
 import {Appointment} from "./pages/adm/Appointment";
+import { BookAppointment } from "./pages/client/BookAppointment";
 
 export default function App() {
   return (
@@ -26,6 +27,8 @@ export default function App() {
             <Route path="/adm/availability" element={<Availability />} />
             <Route path="/adm/settings" element={<Settings/>} />
           </Route>
+
+          <Route path="/book" element={<BookAppointment/>}/>
         </Routes>
       </Router>
     </>
