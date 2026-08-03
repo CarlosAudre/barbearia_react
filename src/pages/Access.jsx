@@ -35,7 +35,7 @@ export function Access() {
 
         <div className="absolute top-0  flex items-center px-15 py-8 z-20 gap-4 ">
           <Scissors className="w-7 h-7 text-amber-300" />
-          <p className="font-montserrat text-4xl text-white">Obsidian</p>
+          <p className="font-montserrat text-4xl text-white">Kingsman</p>
         </div>
 
         <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/30 to-transparent z-10 flex p-15 flex-col justify-center text-white gap-5 ">

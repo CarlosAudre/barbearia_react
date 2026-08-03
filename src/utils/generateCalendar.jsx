@@ -5,7 +5,7 @@ export function generateCalendar(currentDate) {
     0,
   ).getDate();
 
-  const startDay = new Date(
+  const startWeekDay = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
     1,
@@ -14,7 +14,7 @@ export function generateCalendar(currentDate) {
   const calendar = [];
 
   // espaços vazios antes do dia 1
-  for (let i = 0; i < startDay; i++) {
+  for (let i = 0; i < startWeekDay; i++) {
     calendar.push(null);
   }
 

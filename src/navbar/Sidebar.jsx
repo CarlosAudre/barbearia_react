@@ -54,7 +54,7 @@ export function SideBar() {
       <div className="flex flex-col gap-1">
         <div className="flex gap-1 items-center">
           <Scissors className="text-amber-300" />
-          <h1 className="font-playfair text-xl">Obsidian</h1>
+          <h1 className="font-playfair text-xl">Kingsman</h1>
         </div>
         <p className="ml-7 font-montserrat text-gray-400">Painel Admin</p>
       </div>
