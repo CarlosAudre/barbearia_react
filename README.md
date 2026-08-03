@@ -2,7 +2,6 @@
 
 📸 Demonstração (Até o momento)
 
-<img width="1071" height="670" alt="ideia_barbearia" src="https://github.com/user-attachments/assets/3e2ccd23-e650-4a31-bff9-56029e8de2eb" />
 
 <img width="1919" height="889" alt="Captura de tela 2026-08-03 002422" src="https://github.com/user-attachments/assets/792640a8-43a0-4a36-b5a2-a6873f14f848" />
 
