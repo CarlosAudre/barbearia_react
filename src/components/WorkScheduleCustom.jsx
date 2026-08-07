@@ -33,6 +33,8 @@ export function WorkScheduleCustom() {
     workTimes: [],
   });
 
+  const [customizedDays, setCustomizedDays] = useState([]);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarTitle, setCalendarTitle] = useState("");
   const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
@@ -57,7 +59,7 @@ export function WorkScheduleCustom() {
 
   useEffect(() => {
     const title = getMonthName(currentDate);
-    setCalendarTitle(title)
+    setCalendarTitle(title);
   });
 
   useEffect(() => {
@@ -112,7 +114,7 @@ export function WorkScheduleCustom() {
   useEffect(() => {
     async function loadCustomizedDay() {
       try {
-        // limpa o anterior imediatamente
+        // clears the previous customized day
         setCustomizedDay({
           date: selectedDateString,
           active: true,
@@ -144,6 +146,27 @@ export function WorkScheduleCustom() {
     }
   }, [selectedDateString]);
 
+  useEffect(() => {
+    async function loadCustomizedDays() {
+      try {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+
+        const response = await authFetch(
+          `/customized-schedule/${year}/${month}`,
+        );
+
+        const data = await response.json();
+
+        setCustomizedDays(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    loadCustomizedDays();
+  }, [currentDate]);
+
   async function updateCustomizedDay(e) {
     e.preventDefault();
 
@@ -165,11 +188,16 @@ export function WorkScheduleCustom() {
       }
 
       toast.success("Disponibilidade do dia atualizada com sucesso");
+      toast.success("Disponibilidade do dia atualizada com sucesso");
+
+      setCustomizedDays((prev) => [
+        ...prev.filter((day) => day.date !== customizedDay.date),
+        customizedDay,
+      ]);
     } catch (err) {
       console.log(err);
     }
   }
- 
 
   //Slots of time
   function generateSlots(workTimes, slotMinutes = 50) {
@@ -177,7 +205,7 @@ export function WorkScheduleCustom() {
 
     for (const period of workTimes) {
       //ex: 08:00 - 12:00
-      let current = new Date(`1970-01-01T${period.startTime}`); // //ex: 08:00
+      let current = new Date(`1970-01-01T${period.startTime}`); //ex: 08:00
       const end = new Date(`1970-01-01T${period.endTime}`); //ex: 12:00
 
       while (current < end) {
@@ -220,7 +248,18 @@ export function WorkScheduleCustom() {
   return (
     <div className="flex flex-col lg:flex-row gap-5 w-full ">
       {/*Calendar*/}
-      <Calendar currentDate={currentDate} calendarTitle={calendarTitle} workDays={workDays} selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+      <Calendar
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        customizedDays={customizedDays}
+        calendarTitle={calendarTitle}
+        setCalendarTitle={setCalendarTitle}
+        getMonthName={getMonthName}
+        workDays={workDays}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        isAdmin
+      />
 
       {/* business hours */}
       <form

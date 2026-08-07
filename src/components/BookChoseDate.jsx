@@ -16,6 +16,7 @@ export function BookChoseDate() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarTitle, setCalendarTitle] = useState("");
   const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
+  const [customizedDays, setCustomizedDays] = useState([]);
 
   const getMonthName = (date) => {
     const month = months.find((m) => m.id === date.getMonth() + 1);
@@ -43,6 +44,27 @@ export function BookChoseDate() {
     loadSchedule();
   }, []);
 
+   useEffect(() => {
+    async function loadCustomizedDays() {
+      try {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+
+        const response = await authFetch(
+          `/customized-schedule/${year}/${month}`,
+        );
+
+        const data = await response.json();
+
+        setCustomizedDays(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    loadCustomizedDays();
+  }, [currentDate]);
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center text-center items-center gap-2 mb-5">
@@ -55,12 +77,17 @@ export function BookChoseDate() {
 
       <Calendar
         currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        customizedDays={customizedDays}
         calendarTitle={calendarTitle}
+        setCalendarTitle={setCalendarTitle}
+        getMonthName={getMonthName}
+        workDays={workDays}
         selectedDay={selectedDay}
         setSelectedDay={setSelectedDay}
-        workDays={workDays}
         width="w-full"
       />
+
     </div>
   );
 }

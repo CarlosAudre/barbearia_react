@@ -2,9 +2,23 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { days } from "../constants/days";
 import { generateCalendar } from "../utils/generateCalendar";
 
+export function Calendar({
+  currentDate,
+  setCurrentDate,
+  calendarTitle,
+  setCalendarTitle,
+  getMonthName,
+  workDays,
+  customizedDays,
+  selectedDay,
+  setSelectedDay,
+  width = "w-1/2",
+  isAdmin,
+}) {
+  function formatDate(date) {
+    return date.toISOString().split("T")[0];
+  }
 
-export function Calendar({ currentDate, calendarTitle, workDays, selectedDay, setSelectedDay, width = "w-1/2"}) {
-    
   const nextMonth = () => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + 1);
@@ -43,16 +57,27 @@ export function Calendar({ currentDate, calendarTitle, workDays, selectedDay, se
 
     const weekDay = date.getDay();
 
+    const customizedDay = customizedDays.find(
+      (cd) => cd.date === formatDate(date),
+    );
+
     const workDay = workDays.find((wd) => wd.weekDay === days[weekDay].enum);
+
+    const isActive = customizedDay
+      ? customizedDay.active
+      : (workDay?.active ?? false);
 
     return {
       day,
-      active: workDay?.active ?? false,
+      active: customizedDay ? customizedDay.active : (workDay?.active ?? false),
+      isCustomized: !!customizedDay,
     };
   });
 
   return (
-    <div className={`flex flex-col w-full lg:${width} bg-[#131313] p-10 rounded-2xl`}>
+    <div
+      className={`flex flex-col w-full lg:${width} bg-[#131313] p-10 rounded-2xl`}
+    >
       <div className="flex justify-between items-center">
         <div
           className="border rounded-full border-gray-400/40 p-3 hover:text-amber-300 hover:border-amber-300 cursor-pointer"
@@ -76,36 +101,47 @@ export function Calendar({ currentDate, calendarTitle, workDays, selectedDay, se
             <p>{d.abreviation}</p>
           ))}
         </div>
+
         <div className="grid grid-cols-7 gap-5 md:gap-3 p-3">
-          {calendar.map((calendarDay, index) => (
-            <div key={index} className="text-center">
-              {calendarDay.day === null ? (
-                <div className="w-full lg:p-3 invisible">0</div>
-              ) : (
-                <button
-                  disabled={!calendarDay.active}
-                  onClick={() => setSelectedDay(calendarDay.day)}
-                  className={`
-          w-full h-full flex items-center justify-center rounded-xl transition lg:p-3
+          {calendar.map((calendarDay, index) => {
+            const canClick =
+              calendarDay.active || (isAdmin && calendarDay.isCustomized);
 
-          ${
-            calendarDay.active
-              ? "cursor-pointer hover:bg-[#2A2A2A]"
-              : "opacity-30 cursor-not-allowed"
-          }
+            return (
+              <div key={index} className="text-center">
+                {calendarDay.day === null ? (
+                  <div className="w-full lg:p-3 invisible">0</div>
+                ) : (
+                  <button
+                    disabled={!canClick}
+                    onClick={() => setSelectedDay(calendarDay.day)}
+                    className={`
+            w-full h-full flex items-center justify-center rounded-xl transition lg:p-3
+            ${
+              canClick
+                ? "cursor-pointer hover:bg-[#2A2A2A]"
+                : "opacity-30 cursor-not-allowed"
+            }
 
-          ${
-            calendarDay.day === selectedDay
-              ? "bg-amber-400 text-black font-semibold"
-              : ""
-          }
-        `}
-                >
-                  {calendarDay.day}
-                </button>
-              )}
-            </div>
-          ))}
+            ${
+              calendarDay.day === selectedDay
+                ? "bg-amber-400 text-black font-semibold"
+                : ""
+            }
+             ${
+               isAdmin && calendarDay.isCustomized
+                 ? "border border-amber-300 text-amber-300"
+                 : ""
+             }
+
+          `}
+                  >
+                    {calendarDay.day}
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
