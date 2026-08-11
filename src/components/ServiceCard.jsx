@@ -1,9 +1,22 @@
 import { Clock, Pencil, Power, Trash2 } from "lucide-react";
 import { Button } from "./Button";
+import { useState } from "react";
 
-export function ServiceCard({ title, description, value, duration, active, onEditClick, onTrashClick }) {
+export function ServiceCard({
+  title,
+  description,
+  value,
+  duration,
+  active,
+  onEditClick,
+  onTrashClick,
+}) {
+ 
+
   return (
-    <div className="flex flex-col bg-[#131313] py-10 px-8 rounded-2xl">
+    <div
+      className="flex flex-col bg-[#131313] py-10 px-8 rounded-2xl border"
+    >
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
           <h1 className="text-xl font-playfair font-semibold">{title}</h1>
@@ -36,7 +49,10 @@ export function ServiceCard({ title, description, value, duration, active, onEdi
           />
         </div>
 
-        <div className="bg-red-900/20 p-2 rounded-2xl hover:bg-red-500/20 text-red-400 cursor-pointer " onClick={onTrashClick}>
+        <div
+          className="bg-red-900/20 p-2 rounded-2xl hover:bg-red-500/20 text-red-400 cursor-pointer "
+          onClick={onTrashClick}
+        >
           <Trash2 className="w-5 h-5" />
         </div>
       </div>

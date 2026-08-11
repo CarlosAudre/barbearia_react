@@ -9,16 +9,20 @@ export function Button({
   hoverText,
   rounded = "rounded-2xl",
   borderColor,
+  disabled = false,
 }) {
   return (
     <button
       type={type}
-      className={`flex gap-1 p-2 md:px-5 ${rounded} ${bg} ${hoverText} ${hoverBg} border  items-center ${textColor} ${borderColor} font-semibold cursor-pointer w-full 
-      items-center justify-center`}
+      className={`flex gap-1 p-2 md:px-5 ${rounded} ${bg} ${hoverText} ${hoverBg}
+        border items-center ${textColor} ${borderColor}
+        font-semibold cursor-pointer w-full justify-center
+        disabled:opacity-40 disabled:cursor-not-allowed`}
       onClick={handleOnClick}
+      disabled={disabled}
     >
-      {Icon && <Icon className={`w-5 h-5`} />}
-      <p>{title}</p>
+      {Icon && <Icon className="w-5 h-5" />}
+      {title}
     </button>
   );
 }

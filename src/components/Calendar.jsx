@@ -14,6 +14,7 @@ export function Calendar({
   setSelectedDay,
   width = "w-1/2",
   isAdmin,
+  setBooking,
 }) {
   function formatDate(date) {
     return date.toISOString().split("T")[0];
@@ -74,6 +75,19 @@ export function Calendar({
     };
   });
 
+  const onDayClick = (calendarDay) => {
+    if (isAdmin) {
+      setSelectedDay(calendarDay.day);
+    } else {
+      setSelectedDay(calendarDay.day);
+      setBooking((prev) => ({
+        ...prev,
+        date: `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).
+          padStart(2, "0")}-${String(calendarDay.day).padStart(2, "0")}`,
+      }));
+    }
+  };
+
   return (
     <div
       className={`flex flex-col w-full lg:${width} bg-[#131313] p-10 rounded-2xl`}
@@ -102,7 +116,7 @@ export function Calendar({
           ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-5 md:gap-3 p-3">
+        <div className="grid grid-cols-7 gap-5 md:gap-3 lg:gap-0 p-3">
           {calendar.map((calendarDay, index) => {
             const canClick =
               calendarDay.active || (isAdmin && calendarDay.isCustomized);
@@ -114,7 +128,8 @@ export function Calendar({
                 ) : (
                   <button
                     disabled={!canClick}
-                    onClick={() => setSelectedDay(calendarDay.day)}
+                    type="button"
+                    onClick={() => onDayClick(calendarDay)}
                     className={`
             w-full h-full flex items-center justify-center rounded-xl transition lg:p-3
             ${

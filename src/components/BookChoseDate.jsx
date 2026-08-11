@@ -4,7 +4,7 @@ import { Calendar } from "./Calendar";
 import { days } from "../constants/days";
 import { authFetch } from "../utils/authFetch";
 
-export function BookChoseDate() {
+export function BookChoseDate({ setBooking}) {
   const [workDays, setWorkDays] = useState(
     days.map((day) => ({
       weekDay: day.enum,
@@ -17,6 +17,7 @@ export function BookChoseDate() {
   const [calendarTitle, setCalendarTitle] = useState("");
   const [selectedDay, setSelectedDay] = useState(currentDate.getDate());
   const [customizedDays, setCustomizedDays] = useState([]);
+  const [formatedDate, setFormatedDate] = useState();
 
   const getMonthName = (date) => {
     const month = months.find((m) => m.id === date.getMonth() + 1);
@@ -44,7 +45,7 @@ export function BookChoseDate() {
     loadSchedule();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     async function loadCustomizedDays() {
       try {
         const year = currentDate.getFullYear();
@@ -68,7 +69,7 @@ export function BookChoseDate() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center text-center items-center gap-2 mb-5">
-        <p className="text-amber-300 font-montserrat text-sm">ETAPA 1</p>
+        <p className="text-amber-300 font-montserrat text-sm">ETAPA 2</p>
         <h1 className="  text-2xl">ESCOLHA A DATA</h1>
         <p className="text-gray-300/80 ">
           Selecione a sua melhor data para atendimento
@@ -86,8 +87,10 @@ export function BookChoseDate() {
         selectedDay={selectedDay}
         setSelectedDay={setSelectedDay}
         width="w-full"
+        setBooking={setBooking}
+        setFormatedDate={setFormatedDate}
+        formatedDate={formatedDate}
       />
-
     </div>
   );
 }
