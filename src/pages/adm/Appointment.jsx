@@ -209,7 +209,7 @@ export function Appointment() {
           </div>
 
           <div className="flex justify-center md:justify-items-start">
-            {/*PRECISA ENTENDER ESSE DATEINPUTREF ------------------------------------------------------------------------------------ */}
+            {/*xxx------------------------------------------------------------------------------------ */}
             <div
               className="flex border border-gray-300/30 w-fit h-fit p-3 rounded-2xl gap-3 cursor-pointer hover:border-white select-none"
               onClick={() => dateInputRef.current?.showPicker()}
