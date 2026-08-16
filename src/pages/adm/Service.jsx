@@ -157,7 +157,9 @@ export function Service() {
     <div className="flex flex-col w-full p-10">
       <header className="flex flex-col md:flex-row gap-4 md:gap-0">
         <div className="flex flex-col gap-1 justify-center ">
-          <p className="text-amber-300 font-montserrat font-semibold text-lg">Catálogo</p>
+          <p className="text-amber-300 font-montserrat font-semibold text-lg">
+            Catálogo
+          </p>
           <h1 className="text-4xl font-playfair font-semibold">Serviços</h1>
           <p className="text-gray-400">Cadastre e gerencie seus serviços</p>
         </div>
@@ -170,10 +172,10 @@ export function Service() {
         </div>
       </header>
 
-      <main className="relative">
+      <main className="relative -mx-5 lg:mx-0">
         {/* New Service Form */}
         {newServiceFormVisibility && (
-          <div className="absolute top-2/3 md:top/2/1 left-1/2 -translate-x-1/2 -translate-y-3/4  md:-translate-y-1/3">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <NewServiceForm
               title="Novo Serviço"
               handleOnCancel={handleOnCancel}
@@ -190,7 +192,7 @@ export function Service() {
 
         {/* Update Service Form */}
         {updateServiceFormVisibility && (
-          <div className="absolute top-2/3 md:top/2/1 left-1/2 -translate-x-1/2 -translate-y-3/4  md:-translate-y-1/3">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <NewServiceForm
               title="Atualizar Serviço"
               handleOnCancel={() =>
@@ -208,13 +210,13 @@ export function Service() {
               }
               valueOnChange={(e) => setServiceUpdateValue(e.target.value)}
               durationOnChange={(e) => setServiceUpdateDuration(e.target.value)}
-              activeOnChange={(e) => setServiceUpdateActive(e.target.checked)}
+              activeOnChange={(e) => setServiceUpdateActive(e.target.value)}
             />
           </div>
         )}
 
         {alertMessageVisibility && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-3/4  md:-translate-y-1/3">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <AlertMessage
               title="Ao excluir este serviço, ele deixará de aparecer para seus clientes. Deseja continuar?"
               handleOnCancel={() => setAlertMessageVisibility((prev) => !prev)}
@@ -244,7 +246,7 @@ export function Service() {
               }}
               onTrashClick={() => {
                 setServiceId(s.id);
-                setAlertMessageVisibility((prev => !prev));
+                setAlertMessageVisibility((prev) => !prev);
               }}
             />
           ))}

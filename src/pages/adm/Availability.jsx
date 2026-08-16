@@ -32,7 +32,7 @@ export function Availability() {
         </p>
       </header>
 
-      <main className="flex flex-col mt-10">
+      <main className="flex flex-col mt-10 -mx-5 lg:mx-0">
         <div className="flex w-screen md:w-full mb-5">
           <button
             className={`flex border-b-2 w-full md:w-auto  items-center justify-center ${calendarTabSwitch ? "text-amber-400 font-semibold border-amber-400" : "text-gray-300 border-gray-300/20"}
